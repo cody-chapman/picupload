@@ -2,7 +2,7 @@ FROM docker.io/library/archlinux:latest
 
 # 1. Update the system and install systemd + basic tools
 RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm systemd dbus sudo cifs-utils sshfs openssh  && \
+    pacman -S --noconfirm systemd dbus sudo cifs-utils sshfs openssh imagemagick rsync  && \
     pacman -Scc --noconfirm
 
 # 2. Inform systemd that it is running inside an OCI container
@@ -19,6 +19,11 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/*; \
     rm -f /lib/systemd/system/plymouth*; \
     rm -f /lib/systemd/system/systemd-update-utmp*
 COPY rsync-backup.* /etc/systemd/system/
+
+COPY syncscript.sh /usr/local/bin/syncscript
+
+RUN chmod +x /usr/local/bin/syncscript
+
 RUN systemctl enable sshd \
     && systemctl daemon-reload \
     && systemctl enable rsync-backup.timer
