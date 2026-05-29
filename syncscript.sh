@@ -9,7 +9,7 @@
         cp -fR "$MOUNT_POINT"/* "$TEMP_POINT" 2>/dev/null
         rm -fR "$MOUNT_POINT"
         mkdir -p "$MOUNT_POINT"
-        mount "$MOUNT_POINT"
+        mount -t cifs -o credentials=/etc/cifs.creds //vnafs/Pictures /mnt/Pictures
         if [ $? -eq 0 ]; then
             cp -fR "$TEMP_POINT"/* "$MOUNT_POINT" 2>/dev/null
             rm -fR "$TEMP_POINT"
