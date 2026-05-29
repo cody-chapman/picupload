@@ -2,7 +2,7 @@ FROM docker.io/library/archlinux:latest
 
 # 1. Update the system and install systemd + basic tools
 RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm systemd dbus sudo cifs-utils sshfs openssh imagemagick && \
+    pacman -S --noconfirm systemd dbus sudo cifs-utils openssh imagemagick && \
     pacman -Scc --noconfirm
 
 # 2. Inform systemd that it is running inside an OCI container
