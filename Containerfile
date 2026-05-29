@@ -18,4 +18,7 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/*; \
     rm -f /lib/systemd/system/anaconda.target.wants/*; \
     rm -f /lib/systemd/system/plymouth*; \
     rm -f /lib/systemd/system/systemd-update-utmp*
-RUN systemctl enable sshd
+COPY rsync-backup.* /etc/systemd/system/
+RUN systemctl enable sshd \
+    && systemctl daemon-reload \
+    && systemctl enable rsync-backup.timer
