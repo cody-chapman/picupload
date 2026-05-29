@@ -1,0 +1,7 @@
+[Unit]
+Description=Run rsync backup every 5 minutes
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rsync -avz /path/to/source/ /path/to/destination/
