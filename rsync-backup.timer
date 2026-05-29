@@ -1,0 +1,13 @@
+[Unit]
+Description=Trigger rsync backup every 5 minutes
+
+[Timer]
+# Run 5 minutes after the timer unit is started
+OnActiveSec=5m
+# Run every 5 minutes thereafter
+OnUnitActiveSec=5m
+# Ensures the timer persists across restarts if missed
+Persistent=true
+
+[Install]
+WantedBy=timers.target
