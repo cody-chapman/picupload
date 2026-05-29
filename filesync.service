@@ -4,4 +4,4 @@ After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/rsync -avz /path/to/source/ /path/to/destination/
+ExecStart=/usr/local/bin/syncscript
