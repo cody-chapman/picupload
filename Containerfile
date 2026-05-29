@@ -18,12 +18,18 @@ RUN rm -f /lib/systemd/system/multi-user.target.wants/*; \
     rm -f /lib/systemd/system/anaconda.target.wants/*; \
     rm -f /lib/systemd/system/plymouth*; \
     rm -f /lib/systemd/system/systemd-update-utmp*
-COPY rsync-backup.* /etc/systemd/system/
+COPY filesync.* /etc/systemd/system/
 
 COPY syncscript.sh /usr/local/bin/syncscript
 
 RUN chmod +x /usr/local/bin/syncscript
+RUN useradd -m -s /bin/bash vnaftp
+
+# 2. Set the password to 'Password1'
+RUN echo "vnaftp:Password1" | chpasswd
 
 RUN systemctl enable sshd \
-    && systemctl daemon-reload \
-    && systemctl enable rsync-backup.timer
+    && systemctl enable filesync.timer
+
+
+
