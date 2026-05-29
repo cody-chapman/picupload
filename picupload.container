@@ -1,0 +1,33 @@
+[Unit]
+Description=Arch Linux
+
+[Container]
+# 1. Use the official base image
+Image=ghcr.io/cody-chapman/picupload:latest
+ContainerName=picupload
+# 2. Tell systemd it is running inside an OCI container
+Environment=container=podman SYSTEMD_LOG_TARGET=console
+
+# 3. Boot systemd as the primary process (PID 1)
+Exec=/usr/lib/systemd/systemd
+AddCapability=sys_admin
+AddDevice=/dev/fuse
+
+# 5. Enable auto-updates via 'podman auto-update'
+AutoUpdate=registry
+
+# 6. Configure a systemd-managed restart policy
+# Note: Quadlet uses systemd's 'Restart=' key in the [Service] section instead of podman's '--restart' flag.
+[Service]
+Restart=always
+
+# 7. Health Check (Example: Checks if systemd inside the container is responsive)
+[Container]
+HealthCmd=pidof systemd
+HealthStartPeriod=30s
+HealthInterval=30s
+HealthTimeout=5s
+HealthRetries=3
+
+[Install]
+WantedBy=default.target
