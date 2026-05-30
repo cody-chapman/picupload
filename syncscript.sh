@@ -2,6 +2,10 @@
     TEMP_POINT="/mnt/temp-$(uuidgen)"
     SOURCE_DIR="/home/vnaftp"
 
+    echo "domain=$(cat /run/secrets/domain)" > /etc/cifs.creds
+    echo "username=$(cat /run/secrets/domainusername)" >> /etc/cifs.creds
+    echo "password=$(cat /run/secrets/domainpassword)" >> /etc/cifs.creds
+
     # 1. Mount Check & Recovery Logic
     if ! findmnt -t cifs "$MOUNT_POINT" >/dev/null 2>&1; then
         echo "CIFS not detected, attempting recovery mount..."

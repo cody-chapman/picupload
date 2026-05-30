@@ -13,6 +13,11 @@ Exec=/usr/lib/systemd/systemd
 AddCapability=sys_admin
 AddDevice=/dev/fuse
 
+#4. Access to secrets
+Secret=domain
+Secret=domainusername
+Secret=domainpassword
+
 # 5. Enable auto-updates via 'podman auto-update'
 AutoUpdate=registry
 

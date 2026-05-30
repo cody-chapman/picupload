@@ -26,7 +26,7 @@ RUN chmod +x /usr/local/bin/syncscript
 RUN useradd -m -s /bin/bash vnaftp
 
 # 2. Set the password to 'Password1'
-RUN echo "vnaftp:Password1" | chpasswd
+RUN echo "vnaftp:Vnam1941" | chpasswd
 
 RUN systemctl enable sshd \
     && systemctl enable filesync.timer
