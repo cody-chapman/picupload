@@ -2,7 +2,7 @@ FROM docker.io/library/archlinux:latest
 
 # 1. Update the system and install systemd + basic tools
 RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm systemd dbus sudo cifs-utils openssh imagemagick && \
+    pacman -S --noconfirm systemd dbus sudo cifs-utils openssh imagemagick fail2ban && \
     pacman -Scc --noconfirm
 
 # 2. Inform systemd that it is running inside an OCI container
@@ -25,11 +25,12 @@ COPY syncscript.sh /usr/local/bin/syncscript
 RUN chmod +x /usr/local/bin/syncscript
 RUN useradd -m -s /bin/bash vnaftp
 
+EXPOSE 22
+
 # 2. Set the password to 'Password1'
-RUN echo "vnaftp:Vnam1941" | chpasswd
+RUN echo "vnaftp:password" | chpasswd
 
 RUN systemctl enable sshd \
-    && systemctl enable filesync.timer
-
-
+    && systemctl enable filesync.timer \
+    && systemctl enable fail2ban
 
